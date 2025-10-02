@@ -1,75 +1,131 @@
-# 📘 Tugas Kuliah: Konstruktor & Copy Constructor
+# 📘 Tugas 1 Pemrograman Berorientasi Object
+### Meliputi materi :
+1. **Class dan Object (Pertemuan 2)**
+2. **Encapsulation (Pertemuan 3)**
+3. **Constructor (Pertemuan 4)**
 
-## 🎯 Tujuan
-- Mahasiswa memahami **konsep konstruktor** (default, parameterized, copy).
-- Mahasiswa dapat membuat class sederhana dengan **atribut** dan **method**.
-- Mahasiswa dapat menguji penggunaan konstruktor melalui program utama.
-
----
-
-## 📌 Penjelasan
-1. **Default Constructor**  
-   Konstruktor tanpa parameter yang memberi nilai bawaan saat objek dibuat.
-
-2. **Parameterized Constructor**  
-   Konstruktor dengan parameter untuk menginisialisasi atribut secara langsung.
-
-3. **Copy Constructor**  
-   Konstruktor yang membuat objek baru dengan menyalin data dari objek lain (idiom Java).
-
-4. **Method**  
-   Memberikan perilaku umum pada objek (misalnya `makan()`, `bergerak()`).
-
-5. **toString()**  
-   Memudahkan menampilkan isi objek dalam bentuk string.
 
 ---
 
-## 💻 Implementasi
+## 💻 Analisa Kode Berikut
 
-### 1) File `MakhlukHidup.java`
+### Kode `MakhlukHidup.java` dan `TestAccess.java` versi `ERROR`
+><div style="color: blue">
+><strong>Tugas:<br/>
+>1. Temukan, jelaskan, dan perbaiki setiap error berkaitan dengan materi pada MakhlukHidup.java dan TestAccess.java. Ada 10+ kesalahan. Setiap kesalahan memiliki skor (lihat pada tabel skor). Skor minimal LULUS = 60.
+><br/>
+>2. Tuliskan output dari TestAccess jika kode sudah diperbaiki
+></strong>
+</div>
+
 ```java
+
 public class MakhlukHidup {
-    // Atribut
-    private String nama;
+
+    private string nama;       
     private String jenis;
+    public double berat = -1.0;  
     private int umur;
 
-    // 1. Default Constructor
+
     public MakhlukHidup() {
         this.nama = "Unknown";
         this.jenis = "Unknown";
-        this.umur = 0;
-        System.out.println("[Default Constructor] Objek MakhlukHidup dibuat.");
+        this.umur = 15;
+        this.berat = 10.0;
     }
 
-    // 2. Parameterized Constructor
-    public MakhlukHidup(String nama, String jenis, int umur) {
+    public void MakhlukHidup(String nama) { 
         this.nama = nama;
-        this.jenis = jenis;
+        this.jenis = "Salah";
+        this.umur = 12;
+        this.berat = 170.0;
+    }
+
+    public makhlukHidup(String nama, String jenis, int umur, double berat) { 
+        this.nama = jenis;  
+        this.jenis = nama; 
         this.umur = umur;
-        System.out.println("[Parameterized Constructor] Objek MakhlukHidup dibuat.");
+        this.berat = berat;
     }
 
-    // 3. Copy Constructor
     public MakhlukHidup(MakhlukHidup other) {
-        this.nama = other.nama;
-        this.jenis = other.jenis;
-        this.umur = other.umur;
-        System.out.println("[Copy Constructor] Objek MakhlukHidup disalin.");
+        this.nama = nama; 
+        this.jenis = other.jenis; 
+        this.umur = this.umur; 
+        this.berat = other.berat;
     }
 
-    // Method
-    public void makan() {
-        System.out.println(nama + " sedang makan.");
+
+    public void setUmur(String umur) { 
+        this.umur = umur;
     }
 
-    public void bergerak() {
-        System.out.println(nama + " sedang bergerak.");
+    public void setNama(String nama) {
+        nama = this.nama; 
     }
 
-    @Override
-    public String toString() {
-        return "MakhlukHidup {nama='" + nama + "', jenis='" + jenis + "', umur=" + umur + "}";
+    public int getInfo() { 
+        return "Nama=" + nama + ", Jenis=" + jenis 
+        + ", Umur=" + umur + ", Berat=" + berat;
     }
 }
+
+```
+
+```java
+class TestAccess {
+    public static void main(String[] args) {
+        MakhlukHidup m = new MakhlukHidup();
+        
+        m.nama = "Kucing";  
+        
+        MakhlukHidup m2 = new MakhlukHidup("Harimau", "Hewan", 3, 120.0);
+        
+        MakhlukHidup m3 = new MakhlukHidup(m2);
+ 
+        System.out.println(m.getInfo());
+        
+        System.out.println(m2.getInfo());
+        
+        m2.MakhlukHidup("Kuda"); 
+                
+        System.out.println(m2.getInfo());
+        
+        m3.setUmur(-10); 
+        
+        System.out.println(m3.getInfo());
+
+        
+    }
+}
+```
+
+
+## Table Score
+| No | Error | Materi terkait            | Skor |
+|----|-------|---------------------------|------|
+| 1  | ERR1  | Class & Object (syntax)   | 10   |
+| 2  | ERR2  | Class & Object (type)     | 10   |
+| 3  | ERR3  | Constructor/init          | 10   |
+| 4  | ERR4  | Encapsulation / Setter    | 10   |
+| 5  | ERR5  | Constructor (copy)        | 10   |
+| 6  | ERR6  | Constructor (copy)        | 10   |
+| 7  | ERR7  | Encapsulation / Setter    | 10   |
+| 8  | ERR8  | Class & Object (type)     | 10   |
+| 9  | ERR9  | Class & Object (type)     | 10   |
+| 10 | ERR10 | Encapsulation / Validation| 10   |
+**Total skor : 100**
+
+## Petunjuk Pengerjaan
+
+Temukan semua ERR#, jelaskan kenapa salah dalam bentuk table dengan kolom berikut, selanjutnya tulis kode perbaikannya.
+
+| No | Class        | Kesalahan | Perbaikan |
+|----|--------------|-----------|-----------|
+| 1 | MakhlukHidup | [contoh] variable `jumlah` salah penulisan akses `publik` | seharusnya `public jumlah = 10`|
+
+2. Kompilasi dan jalankan setelah diperbaiki.
+3. Upload kode pada **Github** repository anda dan **upload link nya ke dalam sinau** di topik **Tugas 1 PBO** disertai **file penjelasannya** dalam format word atau markdown
+
+> Peringatan : Penggunaan AI tidak menjamin jawaban anda semuanya benar
