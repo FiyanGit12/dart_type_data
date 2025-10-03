@@ -22,7 +22,7 @@ public class MakhlukHidup {
 
     private string nama;       // ERR1: Class & Object (syntax) ❌ 'string' harus 'String'
     private String jenis;
-    public double berat = -1.0;  // ERR2: Class & Object (type) ❌ berat tidak logis negatif, default lebih aman 0.0
+    public double berat = -1.0;  // ERR2: Class & Object (type) ❌ berat harusnya tidak negatif
     private int umur;
 
     // Default Constructor
@@ -43,52 +43,55 @@ public class MakhlukHidup {
 
     public makhlukHidup(String nama, String jenis, int umur, double berat) { 
         // ERR1 (duplikat): Class & Object (syntax) ❌ nama constructor tidak sesuai (huruf kecil)
-        this.nama = jenis;   // ERR4: Encapsulation / Setter ❌ salah assign → harus 'this.nama = nama'
-        this.jenis = nama;   // ERR7: Encapsulation / Setter ❌ salah assign → harus 'this.jenis = jenis'
+        this.nama = jenis;   // ERR4: Encapsulation / Setter ❌ salah penulisan → harus 'this.nama = nama'
+        this.jenis = nama;   // ERR7: Encapsulation / Setter ❌ salah penulisan → harus 'this.jenis = jenis'
         this.umur = umur;
         this.berat = berat;
     }
 
     public MakhlukHidup(MakhlukHidup other) { 
-        this.nama = nama;    // ERR5: Constructor (copy) ❌ salah referensi → harus 'this.nama = other.nama'
+        this.nama = nama;    // ERR5: Constructor (copy) ❌ salah penulisan harusnya kalo other jadi other.nama;
         this.jenis = other.jenis; 
-        this.umur = this.umur; // ERR6: Constructor (copy) ❌ salah referensi → harus 'this.umur = other.umur'
+        this.umur = this.umur; // ERR6: Constructor (copy) ❌ salah penulisan harusnya kalo other jadi other.umur;
         this.berat = other.berat;
     }
 
     public void setUmur(String umur) {  
-        // ERR9: Class & Object (type) ❌ tipe salah (String → int)
-        this.umur = umur;   // ERR9 (duplikat): assignment tidak valid, int vs String
+        // ERR9: Class & Object (type) ❌ salah tipe data harusnya umur pake int
+        this.umur = umur;   // ERR9 Tetap salah karna yang diatas salah
     }
 
     public void setNama(String nama) {
-        nama = this.nama;   // ERR7 (duplikat): assignment terbalik → harus 'this.nama = nama'
+        nama = this.nama;   // ERR7 Kebalik harusnya this.nama = nama;
     }
 
     public int getInfo() { 
         // ERR10: Encapsulation / Validation ❌ return type salah (harus String)
         return "Nama=" + nama + ", Jenis=" + jenis 
-        + ", Umur=" + umur + ", Berat=" + berat; // ERR10 (duplikat): return String tapi deklarasi int
+        + ", Umur=" + umur + ", Berat=" + berat; // ERR10  return String tapi deklarasi int
     }
 } 
 ```
 
 ## 🛠️ Perbaikan Error
-| No  | Error Code | Jenis Kesalahan            | Penjelasan Kesalahan                                                   | Perbaikan                                                                 |
-|-----|------------|----------------------------|------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| 1   | ERR1       | Salah penulisan tipe data  | Tulis `string` (s kecil), padahal di Java harus `String` (S besar)     | Ganti `string` → `String`                                                |
-| 2   | ERR2       | Nilai awal tidak logis     | Berat diisi `-1.0` (tidak masuk akal untuk berat)                      | Ganti nilai awal jadi `0.0`                                               |
-| 3   | ERR3       | Salah deklarasi constructor| Constructor ditulis `void MakhlukHidup(...)`                           | Hapus `void`, jadi `public MakhlukHidup(...)`                             |
-| 4   | ERR8       | Nama constructor salah     | Ditulis `makhlukHidup(...)` (huruf kecil)                              | Samakan dengan nama class: `MakhlukHidup(...)`                           |
-| 5   | ERR4       | Inisialisasi atribut salah | Di constructor: `this.nama = jenis;`                                   | Harusnya `this.nama = nama;`                                              |
-| 6   | ERR7       | Inisialisasi atribut salah | Di constructor: `this.jenis = nama;`                                   | Harusnya `this.jenis = jenis;`                                            |
-| 7   | ERR5       | Copy constructor salah     | `this.nama = nama;` padahal harus ambil dari objek lain                | Harusnya `this.nama = other.nama;`                                        |
-| 8   | ERR6       | Copy constructor salah     | `this.umur = this.umur;`                                               | Harusnya `this.umur = other.umur;`                                        |
-| 9   | ERR9       | Tipe parameter tidak cocok | `setUmur(String umur)` → umur harusnya angka (int), bukan teks (String)| Ganti jadi `setUmur(int umur)`                                            |
-| 10  | ERR9  | Assignment tidak valid     | `this.umur = umur;` error karena `umur` bertipe String                 | Setelah tipe parameter benar (int), assignment jadi valid                 |
-| 11  | ERR7  | Assignment terbalik       | Di `setNama`: `nama = this.nama;`                                      | Harusnya `this.nama = nama;`                                              |
-| 12  | ERR10      | Return type salah          | `getInfo()` dideklarasi `int`, padahal return String                   | Ganti jadi `public String getInfo()`                                      |
-| 13  | ERR10 | Return type salah          | `return "Nama=" + ...` hasilnya String, bukan int                      | Sesuaikan tipe kembalian jadi `String`                                   |
+| No | Class        | Error                                                                | Perbaikan                                                          |
+| -- | ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| 1  | MakhlukHidup | `private string nama;` → ❌ salah, `string` tidak valid di Java       | ✅ Ganti jadi `private String nama;`                                |
+| 2  | MakhlukHidup | `public double berat = -1.0;` → ❌ berat tidak boleh negatif          | ✅ Inisialisasi dengan `0.0` atau validasi di setter                |
+| 3  | MakhlukHidup | `public void MakhlukHidup(String nama)` → ❌ constructor pakai `void` | ✅ Hapus `void`, jadikan `public MakhlukHidup(String nama)`         |
+| 4  | MakhlukHidup | `this.nama = jenis;` → ❌ salah assignment                            | ✅ Seharusnya `this.nama = nama;`                                   |
+| 5  | MakhlukHidup | `this.nama = nama;` di copy constructor → ❌ salah referensi          | ✅ Seharusnya `this.nama = other.nama;`                             |
+| 6  | MakhlukHidup | `this.umur = this.umur;` di copy constructor → ❌ tidak berubah       | ✅ Seharusnya `this.umur = other.umur;`                             |
+| 7  | MakhlukHidup | `this.jenis = nama;` → ❌ salah assignment                            | ✅ Seharusnya `this.jenis = jenis;`                                 |
+| 8  | MakhlukHidup | Nama constructor `public makhlukHidup(...)` → ❌ huruf kecil          | ✅ Harus konsisten `public MakhlukHidup(...)`                       |
+| 9  | MakhlukHidup | `public void setUmur(String umur)` → ❌ tipe salah (String)           | ✅ Harus `public void setUmur(int umur)`                            |
+| 10 | MakhlukHidup | `this.umur = umur;` di setter salah karena tipe data                 | ✅ Setelah ganti ke `int`, bisa `this.umur = umur;` dengan validasi |
+| 11 | MakhlukHidup | `nama = this.nama;` di setter → ❌ assignment terbalik                | ✅ Seharusnya `this.nama = nama;`                                   |
+| 12 | MakhlukHidup | `public int getInfo()` → ❌ return type salah                         | ✅ Harus `public String getInfo()`                                  |
+| 13 | MakhlukHidup | `return "Nama="...` di `getInfo` → ❌ return String tapi method `int` | ✅ Sesuaikan: `public String getInfo()` dan return String benar     |
+
+
+
 
 ## 💻 Kode Program Versi Perbaikan
 ```Java
@@ -168,13 +171,12 @@ public class TestAccess {
 }
 ```
 ## 🛠️ Perbaikan Error
-| No  | Error Code | Jenis Kesalahan          | Penjelasan Kesalahan                                                                 | Perbaikan                                   |
-|-----|------------|--------------------------|--------------------------------------------------------------------------------------|---------------------------------------------|
-| 1   | ERR1       | Akses modifier salah     | `m.nama = "Kucing";` → atribut `nama` bersifat `private`, tidak bisa diakses langsung | Gunakan setter: `m.setNama("Kucing");`      |
-| 2   | ERR2       | Melanggar enkapsulasi    | Mengakses langsung atribut bertentangan dengan prinsip OOP (harus via getter/setter) | Gunakan `setNama` atau `getNama`            |
-| 3   | ERR3       | Salah pemanggilan ctor   | `m2.MakhlukHidup("Kuda");` → konstruktor tidak bisa dipanggil seperti method         | Gunakan setter: `m2.setNama("Kuda");`       |
-| 4   | ERR4       | Salah konsep constructor | Constructor hanya dipanggil saat `new Object`, bukan lewat objek yang sudah ada      | Hapus pemanggilan ctor → ganti dengan setter|
-| 5   | ERR10      | Data tidak valid         | `m3.setUmur(-10);` → umur tidak boleh negatif                                        | Tambahkan validasi di setter agar default=0 |
+| No | Class      | Error                                                                | Perbaikan                                                   |
+| -- | ---------- | -------------------------------------------------------------------- | ----------------------------------------------------------- |
+| 1  | TestAccess | `m.nama = "Kucing";` → ❌ nggak bisa akses atribut `private` langsung | ✅ Harus pakai setter → `m.setNama("Kucing");`               |
+| 2  | TestAccess | `m2.MakhlukHidup("Kuda");` → ❌ constructor dipanggil seperti method  | ✅ Tidak boleh begitu, cukup pakai `m2.setNama("Kuda");`     |
+| 3  | TestAccess | `m3.setUmur(-10);` → ❌ setter dipanggil dengan umur negatif          | ✅ Setter sudah handle otomatis → nilai negatif diset ke `0` |
+
 
 
 ## 💻 Kode Program Versi Perbaikan
@@ -206,7 +208,6 @@ public class TestAccess {
 
 ```
 
-## 📤 Output Program
 ## 📤 Output Program
 
 ```diff
