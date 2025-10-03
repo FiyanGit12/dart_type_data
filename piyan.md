@@ -138,41 +138,80 @@ public class MakhlukHidup {
     }
 }
 ```
-```Main Java
-public class Main {
+
+## 🔹 Analisa Class `TestAcces`
+
+### 📂 Kode Versi ERROR
+```java
+public class TestAccess {
     public static void main(String[] args) {
-        // Membuat object m1 dengan Default Constructor
-        // Atribut akan berisi nilai default (Unknown, Unknown, 0, 0.0)
-        MakhlukHidup m1 = new MakhlukHidup();
-        System.out.println(m1.getInfo());  // Menampilkan info object m1
+        MakhlukHidup m = new MakhlukHidup();
 
-        // Membuat object m2 dengan Parameterized Constructor
-        // Nilai atribut langsung diisi sesuai parameter
+        m.nama = "Kucing";  // ERR1/ERR2/ERR4 → nggak bisa akses langsung atribut private, harus pakai setter (m.setNama)
+
         MakhlukHidup m2 = new MakhlukHidup("Harimau", "Hewan", 3, 120.0);
-        System.out.println(m2.getInfo());  // Menampilkan info object m2
 
-        // Membuat object m3 dengan Copy Constructor
-        // Menyalin semua nilai atribut dari object m2
         MakhlukHidup m3 = new MakhlukHidup(m2);
-        System.out.println(m3.getInfo());  // Menampilkan info object m3
 
-        // Menguji Encapsulation + Validation pada atribut umur
-        // Setter akan menolak nilai negatif, lalu otomatis diset ke 0
-        m3.setUmur(-5); 
-        System.out.println(m3.getInfo());  // Umur akan jadi 0
+        System.out.println(m.getInfo());
 
-        // Mengubah nama object m3 dengan setter
-        // Contoh penggunaan method untuk akses/mengubah atribut private
-        m3.setNama("Kucing");
-        System.out.println(m3.getInfo());  // Nama berubah jadi "Kucing"
+        System.out.println(m2.getInfo());
+
+        m2.MakhlukHidup("Kuda");  // ERR3 → constructor nggak bisa dipanggil seperti method, perbaikan pakai setter (m2.setNama)
+
+        System.out.println(m2.getInfo());
+
+        m3.setUmur(-10);  // ERR10 → umur negatif nggak valid, otomatis diset 0 oleh setter
+
+        System.out.println(m3.getInfo());
     }
 }
 ```
+## 🛠️ Perbaikan Error
+| No  | Error Code | Jenis Kesalahan          | Penjelasan Kesalahan                                                                 | Perbaikan                                   |
+|-----|------------|--------------------------|--------------------------------------------------------------------------------------|---------------------------------------------|
+| 1   | ERR1       | Akses modifier salah     | `m.nama = "Kucing";` → atribut `nama` bersifat `private`, tidak bisa diakses langsung | Gunakan setter: `m.setNama("Kucing");`      |
+| 2   | ERR2       | Melanggar enkapsulasi    | Mengakses langsung atribut bertentangan dengan prinsip OOP (harus via getter/setter) | Gunakan `setNama` atau `getNama`            |
+| 3   | ERR3       | Salah pemanggilan ctor   | `m2.MakhlukHidup("Kuda");` → konstruktor tidak bisa dipanggil seperti method         | Gunakan setter: `m2.setNama("Kuda");`       |
+| 4   | ERR4       | Salah konsep constructor | Constructor hanya dipanggil saat `new Object`, bukan lewat objek yang sudah ada      | Hapus pemanggilan ctor → ganti dengan setter|
+| 5   | ERR10      | Data tidak valid         | `m3.setUmur(-10);` → umur tidak boleh negatif                                        | Tambahkan validasi di setter agar default=0 |
+
+
+## 💻 Kode Program Versi Perbaikan
+```java
+public class TestAccess {
+    public static void main(String[] args) {
+        // Objek m dibuat dengan Default Constructor
+        MakhlukHidup m = new MakhlukHidup();
+        m.setNama("Kucing");  
+        System.out.println(m.getInfo());
+
+        // Objek m2 dibuat dengan Parameterized Constructor
+        MakhlukHidup m2 = new MakhlukHidup("Harimau", "Hewan", 3, 120.0);
+        System.out.println(m2.getInfo());
+
+        // Objek m3 dibuat dengan Copy Constructor (salin dari m2)
+        MakhlukHidup m3 = new MakhlukHidup(m2);
+        System.out.println(m3.getInfo());
+
+        // Ubah nama m2 pakai setter
+        m2.setNama("Kuda");
+        System.out.println(m2.getInfo());
+
+        // Uji validasi: set umur negatif pada m3
+        m3.setUmur(-10);
+        System.out.println(m3.getInfo());
+    }
+}
+
+```
 
 ## 📤 Output Program
+## 📤 Output Program
+
 ```diff
 [Default Constructor] Objek MakhlukHidup dibuat.
-+ Nama=Unknown, Jenis=Unknown, Umur=0, Berat=0.0
++ Nama=Kucing, Jenis=Unknown, Umur=0, Berat=0.0
 
 [Parameterized Constructor] Objek MakhlukHidup dibuat dengan parameter.
 + Nama=Harimau, Jenis=Hewan, Umur=3, Berat=120.0
@@ -180,13 +219,10 @@ public class Main {
 [Copy Constructor] Objek MakhlukHidup disalin dari objek lain.
 + Nama=Harimau, Jenis=Hewan, Umur=3, Berat=120.0
 
++ Nama=Kuda, Jenis=Hewan, Umur=3, Berat=120.0
+
 - Umur tidak boleh negatif. Diset ke 0.
 + Nama=Harimau, Jenis=Hewan, Umur=0, Berat=120.0
-
-+ Nama=Kucing, Jenis=Hewan, Umur=0, Berat=120.0
 ```
 
-## 🔹 Analisa Class `TestAcces`
-
-### 📂 Kode Versi ERROR
 
