@@ -1,23 +1,29 @@
-## 💻 Analisa Kode Berikut
+# 📝 Laporan Analisa Kode Java  
 
-### Kode `MakhlukHidup.java` dan `TestAccess.java` versi `ERROR`
-><div style="color: blue">
-><strong>Tugas:<br/>
->1. Temukan, jelaskan, dan perbaiki setiap error berkaitan dengan materi pada MakhlukHidup.java dan TestAccess.java. Ada 10+ kesalahan. Setiap kesalahan memiliki skor (lihat pada tabel skor). Skor minimal LULUS = 60.
-><br/>
->2. Tuliskan output dari TestAccess jika kode sudah diperbaiki
-></strong>
+<div style="padding: 10px; border: 2px solid black; border-radius: 8px; width: 400px; background: #f8f8f8;">
+<b>Nama:</b> Alfiyan Arif Maulana Ahmad <br/>
+<b>NIM:</b> 32602400034
 </div>
 
-```java
+---
 
+## 📌 Soal Tugas
+> 1. Temukan, jelaskan, dan perbaiki setiap error berkaitan dengan materi pada `MakhlukHidup.java` dan `TestAccess.java`.  
+> 2. Ada 10+ kesalahan. Setiap kesalahan memiliki skor (lihat tabel skor). Skor minimal **LULUS = 60**.  
+> 3. Tuliskan output dari `TestAccess` jika kode sudah diperbaiki.  
+
+---
+
+## 🔹 Analisa Class `MakhlukHidup`
+
+### 📂 Kode Versi ERROR
+```java
 public class MakhlukHidup {
 
     private string nama;       
     private String jenis;
     public double berat = -1.0;  
     private int umur;
-
 
     public MakhlukHidup() {
         this.nama = "Unknown";
@@ -47,7 +53,6 @@ public class MakhlukHidup {
         this.berat = other.berat;
     }
 
-
     public void setUmur(String umur) { 
         this.umur = umur;
     }
@@ -61,33 +66,3 @@ public class MakhlukHidup {
         + ", Umur=" + umur + ", Berat=" + berat;
     }
 }
-
-```
-
-```java
-class TestAccess {
-    public static void main(String[] args) {
-        MakhlukHidup m = new MakhlukHidup();
-        
-        m.nama = "Kucing";  
-        
-        MakhlukHidup m2 = new MakhlukHidup("Harimau", "Hewan", 3, 120.0);
-        
-        MakhlukHidup m3 = new MakhlukHidup(m2);
- 
-        System.out.println(m.getInfo());
-        
-        System.out.println(m2.getInfo());
-        
-        m2.MakhlukHidup("Kuda"); 
-                
-        System.out.println(m2.getInfo());
-        
-        m3.setUmur(-10); 
-        
-        System.out.println(m3.getInfo());
-
-        
-    }
-}
-```
